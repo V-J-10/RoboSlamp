@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <title>Bluetooth Control</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercss@1.4.1/dist/paper.min.css">
+
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
+      margin: 0;
+      padding: 0;
     }
     .container {
       margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      justify-content: center;
     }
     button {
       font-size: 16px;
@@ -18,17 +26,26 @@
       margin: 10px;
       cursor: pointer;
     }
-    button.disconnect {
-      background-color: red;
-      color: white;
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        margin-top: 20px;
+        grid-template-columns: 1fr;
+      }
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+        margin: 5px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Bluetooth Control</h1>
+    <h1>Bluetooth Control</h1><br>
     <button id="connectBtn" onclick="connect()">Connect</button>
-    <button id="disconnectBtn" class="disconnect" style="display: none;" onclick="disconnect()">Disconnect</button>
+    <button id="disconnectBtn" onclick="disconnect()">Disconnect</button>
     <button id="onBtn" onclick="sendCommand('1')">ON</button>
     <button id="offBtn" onclick="sendCommand('0')">OFF</button>
   </div>
@@ -62,7 +79,6 @@
         console.log("Disconnected from device:", bluetoothDevice.name);
       }
       document.getElementById('connectBtn').style.display = 'inline-block';
-      document.getElementById('disconnectBtn').style.display = 'none';
     }
 
     async function sendCommand(command) {
